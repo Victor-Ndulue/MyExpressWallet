@@ -6,6 +6,10 @@ namespace Application.Repositories.CommonRepo
 {
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
+        public AppDbContext()
+        {
+        }
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -15,9 +19,6 @@ namespace Application.Repositories.CommonRepo
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<Transaction>()
-                .HasKey(k => new {k.Id,k.SenderUserWalletId, k.RecipientUserWalletId});
 
             builder.Entity<Transaction>()
                 .HasOne(r => r.RecipientUserWallet)

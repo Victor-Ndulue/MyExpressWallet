@@ -1,5 +1,13 @@
 ﻿using Application.Repositories.CommonRepo;
+using Application.UnitOfWork.Implementations;
+using Application.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Services.Implementations.ServiceCommon;
+using Services.Implementations.ServiceEntities;
+using Services.Interfaces.IServiceCommon;
+using Services.Interfaces.IServiceEntities;
+using Services.LoggerService.Implementation;
+using Services.LoggerService.Interface;
 
 namespace Api.Extensions
 {
@@ -17,8 +25,14 @@ namespace Api.Extensions
                 });
             });
 
-            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("SqlConnection"), 
-                b => b.MigrationsAssembly("Application")));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IWalletServices, WalletServices>();
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<ITransactionServices, TransactionServices>();
+            services.AddAutoMapper(typeof(Services.MapInitializers.MappingProfile));
+            services.AddSingleton<ILoggerManager, LoggerManager>();
+            services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("SqlConnection")), ServiceLifetime.Scoped);
         }
     }
 }

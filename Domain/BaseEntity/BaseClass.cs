@@ -6,7 +6,7 @@ namespace Domain.BaseEntity
     {
 
         [Key]
-        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString().Substring(0,5);
 
 
         public DateTime CreatedOn { get; set; } = DateTime.Now;

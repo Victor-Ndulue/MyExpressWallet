@@ -4,6 +4,7 @@ using Application.Repositories.CommonRepo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230823163443_UserWalletUpdate")]
+    partial class UserWalletUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,22 +122,24 @@ namespace Application.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("SenderUserWalletId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RecipientUserWalletId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("RecipientUserWalletId")
+                    b.Property<string>("Recipient")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("RemainingBalance")
                         .HasColumnType("money");
-
-                    b.Property<string>("SenderUserWalletId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -148,7 +153,7 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "SenderUserWalletId", "RecipientUserWalletId");
 
                     b.HasIndex("RecipientUserWalletId");
 
