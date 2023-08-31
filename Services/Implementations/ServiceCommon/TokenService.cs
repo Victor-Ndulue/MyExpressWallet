@@ -1,4 +1,5 @@
 ﻿using Domain.Entites;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Services.Interfaces.IServiceCommon;
@@ -15,19 +16,25 @@ namespace Services.Implementations.ServiceCommon
     public class TokenService:ITokenService
     {
         private readonly SymmetricSecurityKey _key;
-        public TokenService(IConfiguration configuration)
+        private readonly UserManager<AppUser> _userManager;
+        public TokenService(IConfiguration configuration,UserManager<AppUser> userManager)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
+            _userManager = userManager;
         }
 
         public async Task<string> CreateToken(AppUser user)
         {
+            var roles =await _userManager.GetRolesAsync(user);
             var claim = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            {                
+                new Claim(ClaimTypes.Email, user.Email),
             };
-
-            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            foreach (var role in roles)
+            {
+                claim.Add(new Claim(ClaimTypes.Role, role));
+            }
+            var cred = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

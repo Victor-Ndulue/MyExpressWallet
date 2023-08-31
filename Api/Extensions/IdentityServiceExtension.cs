@@ -25,10 +25,12 @@ namespace Api.Extensions
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding
-                        .UTF8.GetBytes(config["TokenKey"])),
+                        ValidateLifetime = true,
                         ValidateAudience = false,
-                        ValidateIssuer = false
+                        ValidateIssuer = false,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding
+                        .UTF8.GetBytes(config["TokenKey"]))
+                        
                     };
                 });
         }

@@ -27,9 +27,8 @@ namespace Api.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IWalletServices, WalletServices>();
-            services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<ITransactionServices, TransactionServices>();
+            services.AddScoped<IUserServices, UserServices>();
             services.AddAutoMapper(typeof(Services.MapInitializers.MappingProfile));
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("SqlConnection")), ServiceLifetime.Scoped);

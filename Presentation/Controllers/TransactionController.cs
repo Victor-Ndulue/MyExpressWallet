@@ -14,10 +14,19 @@ namespace Presentation.Controllers
 
         [HttpPost]
         [Route("verify")]
-        public IActionResult VerifyPayment(string reference, string walletId) 
+        public async Task<IActionResult> VerifyPayment(string reference, string walletId) 
         {
             var userMail = User.GetUsername();
-            var response = _transactionServices.VerifyPayment(reference,userMail,walletId);
+            var response = await _transactionServices.VerifyPaymentService.VerifyPayment(reference,userMail,walletId);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("fundwallet")]
+        public async Task<IActionResult> FundWallet(int amount, string walletId)
+        {
+            var email = User.GetUsername();
+            var response = await _transactionServices.WalletFundingService.FundWalletAccount(amount, email, walletId);
             return Ok(response);
         }
     }

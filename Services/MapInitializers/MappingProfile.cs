@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entites;
 using Services.DTO_s.Request;
+using Services.DTO_s.Response;
 
 namespace Services.MapInitializers
 {
@@ -9,6 +10,7 @@ namespace Services.MapInitializers
         public MappingProfile()
         {
             CreateMap<UserCreationRequestDto, AppUser>();
+            CreateMap<AppUser, UserResponse>();
         }
     }
 }
