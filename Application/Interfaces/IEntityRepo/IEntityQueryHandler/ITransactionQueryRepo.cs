@@ -7,7 +7,7 @@ namespace Application.Interfaces.IEntityRepo.IEntityQueryHandler
     {
         IQueryable<Transaction> GetTransactionsByTransactionId(string Id, bool trackChanges);
         IQueryable<Transaction> GetTransactionsByDate(DateTime date, bool trackChanges);
-        Task<Transaction> GetTransactionsByReference(string reference, bool trackChanges);
+        IQueryable<Transaction> GetTransactionsByReference(string reference, bool trackChanges);
         IQueryable<Transaction> GetTransactionsBySenderId(string senderId, bool trackChanges);
         IQueryable<Transaction> GetTransactionsBySenderPhoneNumber(string senderPhoneNumber, bool trackChanges);
         IQueryable<Transaction> GetTransactionsByRecipientId(string recipientId, bool trackChanges);

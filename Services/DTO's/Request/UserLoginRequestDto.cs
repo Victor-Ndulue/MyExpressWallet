@@ -1,8 +1,6 @@
 ﻿namespace Services.DTO_s.Request
 {
-    public class UserLoginRequestDto
+    public record UserLoginRequestDto(string UserName, string Password)
     {
-        public string UserName { get; set; }    
-        public string Password { get; set; }
     }
 }

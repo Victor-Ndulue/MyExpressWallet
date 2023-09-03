@@ -59,7 +59,7 @@ namespace Services.Implementations.ServiceEntities
 
         private async Task<Transaction> GetTransactionByReferenceAsync(string reference)
         {
-            return await _unitOfWork.TransactionQuery.GetTransactionsByReference(reference, false);
+            return await _unitOfWork.TransactionQuery.GetTransactionsByReference(reference, false).SingleOrDefaultAsync();
         }
 
         private async Task<VerifyResponse> VerifyTransactionAsync(string reference)

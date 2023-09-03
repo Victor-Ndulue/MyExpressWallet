@@ -4,7 +4,7 @@ namespace Presentation
 {
     public static class ClaimsExtension
     {
-        public static string GetUsername(this ClaimsPrincipal user)
+        public static string GetUserEmail(this ClaimsPrincipal user)
         {
             return user.FindFirstValue(ClaimTypes.Email);
         }

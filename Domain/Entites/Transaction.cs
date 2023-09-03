@@ -12,6 +12,8 @@ namespace Domain.Entites
         public decimal RemainingBalance { get; set; }
         [Column(TypeName = "money")]
         public decimal Amount { get; set; }
+        public bool IsSenderDeleted { get; set; }
+        public bool IsRecipientDeleted { get; set; }
         public UserWallet SenderUserWallet { get; set; }
         public UserWallet RecipientUserWallet { get; set; }
     }

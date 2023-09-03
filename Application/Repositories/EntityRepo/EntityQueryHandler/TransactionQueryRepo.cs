@@ -20,9 +20,9 @@ namespace Application.Repositories.EntityRepo.EntityQueryHandler
         {
             return GetByCondition(t => t.CreatedOn.Date == date.Date, trackChanges);
         }
-        public async Task<Transaction> GetTransactionsByReference(string reference, bool trackChanges)
+        public IQueryable<Transaction> GetTransactionsByReference(string reference, bool trackChanges)
         {
-            return await GetByCondition(t => t.TransactionRef == reference, trackChanges).SingleOrDefaultAsync();
+            return GetByCondition(t => t.TransactionRef == reference, trackChanges);
         }
         public IQueryable<Transaction> GetTransactionsBySenderId(string senderId, bool trackChanges) 
         {

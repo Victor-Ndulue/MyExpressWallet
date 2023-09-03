@@ -16,7 +16,7 @@ namespace Presentation.Controllers
         [Route("verify")]
         public async Task<IActionResult> VerifyPayment(string reference, string walletId) 
         {
-            var userMail = User.GetUsername();
+            var userMail = User.GetUserEmail();
             var response = await _transactionServices.VerifyPaymentService.VerifyPayment(reference,userMail,walletId);
             return Ok(response);
         }
@@ -25,9 +25,33 @@ namespace Presentation.Controllers
         [Route("fundwallet")]
         public async Task<IActionResult> FundWallet(int amount, string walletId)
         {
-            var email = User.GetUsername();
+            var email = User.GetUserEmail();
             var response = await _transactionServices.WalletFundingService.FundWalletAccount(amount, email, walletId);
             return Ok(response);
+        }
+
+        [HttpGet("get-by-reference/transactionref")]
+        public async Task<IActionResult> GetTransactionByRefernce([FromQuery] string reference)
+        {
+            var userMail = User.GetUserEmail();
+            var result = await _transactionServices.GetTransactionByReferenceForUser(reference, userMail);
+            return Ok(result);
+        }
+
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAllTransactions()
+        {
+            var userMail = User.GetUserEmail();
+            var result = await _transactionServices.GetAllTransactions(userMail);
+            return Ok(result);
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteTransaction (string transactionRef)
+        {
+            var userMail = User.GetUserEmail();
+            var result = await _transactionServices.DeleteTransaction(transactionRef, userMail);
+            return Ok(result);
         }
     }
 }

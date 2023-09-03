@@ -16,7 +16,7 @@ namespace Presentation.Controllers
         [Route("create")]
         public async Task<IActionResult> CreateWalletAccount()
         {
-            var userMail = User.GetUsername();
+            var userMail = User.GetUserEmail();
              await _walletServices.CreateWalletAccount(userMail);
             return Ok();
         }        

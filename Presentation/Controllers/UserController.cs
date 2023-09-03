@@ -13,19 +13,19 @@ namespace Presentation.Controllers
             _services = services;
         }
 
-        [HttpPost]
-        [Route("create")]
-        public async Task<IActionResult> CreateAdminUser(UserCreationRequestDto userRequest)
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteUser(string userNameToDelete) 
         {
-            var response = await _services.CreateAdminUser(userRequest);
+            var userEmailOfDeletor = User.GetUserEmail();
+            var response = await _services.DeleteUser(userNameToDelete, userEmailOfDeletor);
             return Ok(response);
         }
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> LoginUser(UserLoginRequestDto loginDetails)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser(UserUpdateRequestDto userUpdateRequestDto) 
         {
-            var response = await _services.UserLogin(loginDetails);
+            var userEmail = User.GetUserEmail();
+            var response = await _services.UpdateUser(userEmail,userUpdateRequestDto);
             return Ok(response);
         }
 
