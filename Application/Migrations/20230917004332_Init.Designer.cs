@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230823055305_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230917004332_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,15 +117,72 @@ namespace Application.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entites.Transaction", b =>
+            modelBuilder.Entity("Domain.Entites.PaymentRecord", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SenderUserWalletId")
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsFinalized")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("PublicId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserWalletId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("RecipientUserWalletId")
+                    b.Property<decimal>("amount")
+                        .HasColumnType("money");
+
+                    b.Property<string>("currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("domain")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("integration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("recipient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("source")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("transfer_code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserWalletId");
+
+                    b.ToTable("PaymentRecord");
+                });
+
+            modelBuilder.Entity("Domain.Entites.Transaction", b =>
+                {
+                    b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("Amount")
@@ -134,12 +191,20 @@ namespace Application.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Recipient")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsRecipientDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSenderDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("RecipientUserWalletId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<decimal>("RemainingBalance")
                         .HasColumnType("money");
+
+                    b.Property<string>("SenderUserWalletId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -153,7 +218,7 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id", "SenderUserWalletId", "RecipientUserWalletId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RecipientUserWalletId");
 
@@ -177,8 +242,11 @@ namespace Application.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PayStackAuth")
+                    b.Property<string>("Currency")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PayStackAuth")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -294,19 +362,28 @@ namespace Application.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entites.PaymentRecord", b =>
+                {
+                    b.HasOne("Domain.Entites.UserWallet", "UserWallet")
+                        .WithMany()
+                        .HasForeignKey("UserWalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserWallet");
+                });
+
             modelBuilder.Entity("Domain.Entites.Transaction", b =>
                 {
                     b.HasOne("Domain.Entites.UserWallet", "RecipientUserWallet")
                         .WithMany("ReceivedTransactions")
                         .HasForeignKey("RecipientUserWalletId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Domain.Entites.UserWallet", "SenderUserWallet")
                         .WithMany("SentTransactions")
                         .HasForeignKey("SenderUserWalletId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("RecipientUserWallet");
 

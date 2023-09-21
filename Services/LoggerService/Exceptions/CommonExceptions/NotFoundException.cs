@@ -1,4 +1,4 @@
-﻿namespace Services.LoggerService.Exceptions.CommonException
+﻿namespace Services.LoggerService.Exceptions.CommonExceptions
 {
     public abstract class NotFoundException : Exception
     {

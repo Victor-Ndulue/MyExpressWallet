@@ -8,5 +8,10 @@ namespace Presentation
         {
             return user.FindFirstValue(ClaimTypes.Email);
         }
+
+        public static string GetUserId(this ClaimsPrincipal user)
+        {
+            return user.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
     }
 }

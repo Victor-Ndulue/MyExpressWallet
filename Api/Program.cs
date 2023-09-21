@@ -15,12 +15,15 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.Assembl
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(SwaggerConfiguration.ConfigureSwagger);
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 var logger = app.Services.GetRequiredService<ILoggerManager>();
 app.ConfigureExceptionHandler(logger);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

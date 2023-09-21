@@ -6,7 +6,7 @@ namespace Api.LoggerConfiguration
     {
         public static void ConfigureLogger()
         {
-            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/LoggerConfiguration/nlog.config"));
+            LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/LoggerConfiguration/nlog.config"));
         }
     }
 }

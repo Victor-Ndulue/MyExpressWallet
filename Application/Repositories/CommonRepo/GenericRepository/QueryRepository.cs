@@ -6,13 +6,11 @@ namespace Application.Repositories.CommonRepo.GenericRepository
 {
     public class QueryRepository<T> : IQueryRepository<T> where T : class
     {
-        private readonly AppDbContext _context;
         private readonly DbSet<T> _dbSet;
 
         public QueryRepository(AppDbContext context) 
         {
-            _context = context;
-            _dbSet = _context.Set<T>();
+            _dbSet = context.Set<T>();
         }
 
         public IQueryable<T> GetByCondition (Expression<Func<T, bool>> conditionExpression, bool trackChanges)

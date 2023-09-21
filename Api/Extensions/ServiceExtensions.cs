@@ -2,12 +2,14 @@
 using Application.UnitOfWork.Implementations;
 using Application.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Services.Helpers.MailService;
+using Services.Helpers.MailServices;
 using Services.Implementations.ServiceCommon;
-using Services.Implementations.ServiceEntities;
 using Services.Interfaces.IServiceCommon;
-using Services.Interfaces.IServiceEntities;
 using Services.LoggerService.Implementation;
 using Services.LoggerService.Interface;
+using System.Reflection;
 
 namespace Api.Extensions
 {
@@ -27,11 +29,12 @@ namespace Api.Extensions
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<ITransactionServices, TransactionServices>();
-            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IServiceManager, ServiceManager>();
             services.AddAutoMapper(typeof(Services.MapInitializers.MappingProfile));
             services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("SqlConnection")), ServiceLifetime.Scoped);
+            services.Configure<EmailConfiguration>(config.GetSection("EmailConfiguration"));
+            services.AddTransient< IEmailService,EmailService>();
         }
     }
 }

@@ -16,19 +16,20 @@ namespace Application.Repositories.CommonRepo
 
         public DbSet<UserWallet> UserWallet { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<PaymentRecord> PaymentRecord { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Transaction>()
-                .HasOne(r => r.RecipientUserWallet)
-                .WithMany(l => l.ReceivedTransactions)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<UserWallet>()
+                .HasMany(t => t.SentTransactions)
+                .WithOne(s => s.SenderUserWallet)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Transaction>()
-                .HasOne(s => s.SenderUserWallet)
-                .WithMany(t => t.SentTransactions)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<UserWallet>()
+                .HasMany(t=>t.ReceivedTransactions)
+                .WithOne(r => r.RecipientUserWallet)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

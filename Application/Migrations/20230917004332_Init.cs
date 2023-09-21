@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Application.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -161,9 +161,10 @@ namespace Application.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PayStackAuth = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PayStackAuth = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Balance = table.Column<decimal>(type: "money", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -178,33 +179,67 @@ namespace Application.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transaction",
+                name: "PaymentRecord",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SenderUserWalletId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RecipientUserWalletId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionRef = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Recipient = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RemainingBalance = table.Column<decimal>(type: "money", nullable: false),
-                    Amount = table.Column<decimal>(type: "money", nullable: false),
+                    IsFinalized = table.Column<bool>(type: "bit", nullable: false),
+                    UserWalletId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    reference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    recipient = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    amount = table.Column<decimal>(type: "money", nullable: false),
+                    transfer_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    source = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PublicId = table.Column<int>(type: "int", nullable: false),
+                    integration = table.Column<int>(type: "int", nullable: false),
+                    domain = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transaction", x => new { x.Id, x.SenderUserWalletId, x.RecipientUserWalletId });
+                    table.PrimaryKey("PK_PaymentRecord", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PaymentRecord_UserWallet_UserWalletId",
+                        column: x => x.UserWalletId,
+                        principalTable: "UserWallet",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transaction",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransactionRef = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RemainingBalance = table.Column<decimal>(type: "money", nullable: false),
+                    Amount = table.Column<decimal>(type: "money", nullable: false),
+                    IsSenderDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsRecipientDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    SenderUserWalletId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RecipientUserWalletId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transaction", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Transaction_UserWallet_RecipientUserWalletId",
                         column: x => x.RecipientUserWalletId,
                         principalTable: "UserWallet",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Transaction_UserWallet_SenderUserWalletId",
                         column: x => x.SenderUserWalletId,
                         principalTable: "UserWallet",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -247,6 +282,11 @@ namespace Application.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PaymentRecord_UserWalletId",
+                table: "PaymentRecord",
+                column: "UserWalletId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transaction_RecipientUserWalletId",
                 table: "Transaction",
                 column: "RecipientUserWalletId");
@@ -279,6 +319,9 @@ namespace Application.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "PaymentRecord");
 
             migrationBuilder.DropTable(
                 name: "Transaction");

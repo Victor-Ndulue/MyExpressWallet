@@ -9,6 +9,8 @@ namespace Application.UnitOfWork.Interfaces
         ITransactionQueryRepo TransactionQuery { get; }
         IUserWalletCommandRepo UserWalletCommand { get; }
         IUserWalletQueryRepo UserWalletQuery { get; }
+        IPaymentRecordCommandRepo PaymentRecordCommandRepo { get; }
+        IPaymentRecordQueryRepo PaymentRecordQuery { get; }
         Task SaveChangesAsync();
     }
 }

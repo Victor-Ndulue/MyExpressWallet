@@ -4,6 +4,6 @@ namespace Domain.Entites
 {
     public class AppUser : IdentityUser
     {
-        public ICollection<UserWallet> Wallets { get; set; }
+        public ICollection<UserWallet>? Wallets { get; set; }
     }
 }

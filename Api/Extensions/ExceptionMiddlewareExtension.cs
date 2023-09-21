@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Services.LoggerService.ErrorModel;
-using Services.LoggerService.Exceptions.CommonException;
+using Services.LoggerService.Exceptions.CommonExceptions;
 using Services.LoggerService.Interface;
 
 namespace Api.Extensions

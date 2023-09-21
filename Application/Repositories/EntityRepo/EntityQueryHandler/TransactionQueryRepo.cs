@@ -2,7 +2,6 @@
 using Application.Repositories.CommonRepo;
 using Application.Repositories.CommonRepo.GenericRepository;
 using Domain.Entites;
-using Microsoft.EntityFrameworkCore;
 
 namespace Application.Repositories.EntityRepo.EntityQueryHandler
 {

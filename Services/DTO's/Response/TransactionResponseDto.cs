@@ -2,7 +2,7 @@
 {
     public class TransactionResponseDto
     {
-        public string TransactionId { get; set; }           
+        public string Id { get; set; }           
         public DateTime CreatedOn { get; set; }
         public string TransactionType { get; set; }
         public string TransactionRef { get; set; }

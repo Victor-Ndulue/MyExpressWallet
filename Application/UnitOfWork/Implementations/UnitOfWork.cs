@@ -14,6 +14,8 @@ namespace Application.UnitOfWork.Implementations
         private ITransactionCommandRepo _transactionCommand;
         private  IUserWalletQueryRepo _userWalletQuery;
         private IUserWalletCommandRepo _userWalletCommand;
+        private IPaymentRecordCommandRepo _paymentRecordCommand;
+        private IPaymentRecordQueryRepo _paymentRecordQuery;
         public UnitOfWork(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
@@ -25,6 +27,10 @@ namespace Application.UnitOfWork.Implementations
         public IUserWalletCommandRepo UserWalletCommand => _userWalletCommand ??= new UserWalletCommandRepo(_appDbContext);
 
         public IUserWalletQueryRepo UserWalletQuery => _userWalletQuery ??= new UserWalletQueryRepo(_appDbContext);
+
+        public IPaymentRecordCommandRepo PaymentRecordCommandRepo => _paymentRecordCommand ??= new PaymentRecordCommandRepo(_appDbContext);
+
+        public IPaymentRecordQueryRepo PaymentRecordQuery => _paymentRecordQuery ??= new PaymentRecordQueryRepo(_appDbContext);
 
         public async Task SaveChangesAsync()
         {
