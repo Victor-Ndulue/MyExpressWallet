@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Presentation</name>
+    </assembly>
+    <members>
+        <member name="M:Presentation.Controllers.AuthenticationController.CreateRegularUser(Services.DTO_s.Request.UserCreationRequestDto)">
+            <summary>
+            Creates a user account and wallet
+            </summary>
+            <param name="requestDto">details to create user and user wallet account</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.AuthenticationController.LoginUser(Services.DTO_s.Request.UserLoginRequestDto)">
+            <summary>
+            Authenticates and logs in a user
+            </summary>
+            <param name="loginDetails">validation and authentication details needed</param>
+            <returns>token and login response for user</returns>
+        </member>
+        <member name="M:Presentation.Controllers.AuthenticationController.AddUserRoleByUserName(System.String,System.String)">
+            <summary>
+            adds a user to a particular role
+            </summary>
+            <param name="userName">username of user to save</param>
+            <param name="role">role to assign user</param>
+            <returns>success or failed message</returns>
+        </member>
+        <member name="M:Presentation.Controllers.AuthenticationController.RemoveUserRoleByUserName(System.String,System.String)">
+            <summary>
+            method to remove user from a role
+            </summary>
+            <param name="userName">user name of user to remove from role</param>
+            <param name="role">role to remove user from</param>
+            <returns>success or failure msg</returns>
+        </member>
+        <member name="M:Presentation.Controllers.TransactionController.GetAllTransactions(Shared.PaginationDefiners.PaginationParams)">
+            <summary>
+            Get all transactions
+            </summary>
+            <returns> a list of users account</returns>
+        </member>
+        <member name="M:Presentation.Controllers.TransactionController.GetAllUserTransactions(Shared.PaginationDefiners.PaginationParams)">
+            <summary>
+            Gets list of logged in user transactions
+            </summary>
+            <returns>list of transaction belonging to a particular user</returns>
+        </member>
+        <member name="M:Presentation.Controllers.TransactionController.GetTransactionByRefernceForUser(System.String,System.String)">
+            <summary>
+            method to get transaction based on transaction reference
+            </summary>
+            <param name="reference">transaction refernce</param>
+            <param name="walletId">id of wallet</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.TransactionController.GetTransactionsByDate(System.DateOnly)">
+            <summary>
+            method to get transaction by date
+            </summary>
+            <param name="dateOfTransaction">date transaction took place</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.TransactionController.DeleteTransaction(System.String)">
+            <summary>
+            removes transaction based on reference
+            </summary>
+            <param name="transactionRef">transaction reference</param>
+            <returns>a transaction detail</returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.UpdateUser(Services.DTO_s.Request.UserUpdateRequestDto)">
+            <summary>
+            Updates user details
+            </summary>
+            <param name="userUpdateRequestDto"> user details to update with values</param>
+            <returns> </returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.GetAllUsers(Shared.PaginationDefiners.PaginationParams)">
+            <summary>
+            Gets list of app users
+            </summary>
+            <returns>A list of app users</returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.GetUserById(System.String)">
+            <summary>
+            gets a user by id
+            </summary>
+            <param name="id">id of user</param>
+            <returns>User with id details</returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.GetUsersByRoles(System.String[])">
+            <summary>
+            returns users based on roles
+            </summary>
+            <param name="roles">roles to use for sorting</param>
+            <returns>users falling under details</returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.GetUserWithUserName(System.String)">
+            <summary>
+            returns user with username
+            </summary>
+            <param name="userName">username of user</param>
+            <returns>user with username details</returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.GetUserRolesByUserName(System.String)">
+            <summary>
+            returns user role by entered username
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.UserController.DeleteUser(System.String)">
+            <summary>
+            deletes user account
+            </summary>
+            <param name="userNameToDelete">unsername of user to delete</param>
+            <returns>string notification of delete</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.CreateWalletAccount">
+            <summary>
+            Creates wallet account for user
+            </summary>
+            <returns> respose 200 with data and status code</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.FundWalletAccount(System.Int32,System.String)">
+            <summary>
+            Funds the wallet
+            </summary>
+            <param name="requestAmount"></param>
+            <param name="walletId"></param>
+            <returns>a confirmation message data.</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.VerifyPayment(System.String,System.String)">
+            <summary>
+            Verifies paymentand updates user wallet
+            </summary>
+            <param name="transactionReference"></param>
+            <param name="walletId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.WithdrawFromWalletToBank(Services.DTO_s.Request.WithdrawalRequestDto,System.String)">
+            <summary>
+            Debits wallet to fund bankaccount with entered details
+            </summary>
+            <param name="withdrawalRequest">Details of withdraw and validation</param>
+            <param name="bankCode">code of bank</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.ResolveAccountDetails(System.String,System.String,System.String)">
+            <summary>
+            Resolves account with enterd details
+            </summary>
+            <param name="accountNumber">Account number of recipient</param>
+            <param name="bankName">Recipient bank name</param>
+            <param name="bankCode">code of Recipient bank</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.GetListOfBanksFunded">
+            <summary>
+            Gets list of supported banks
+            </summary>
+            <returns>List of banks</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.SendMoneyToAnotherWallet(Services.DTO_s.Request.SendMoneyRequestDto)">
+            <summary>
+            send money from wallet to another.
+            </summary>
+            <param name="requestDetails">details required for validation and transfer</param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.GetWalletById(System.String)">
+            <summary>
+            Gets user wallet by wallet id
+            </summary>
+            <param name="walletId">Wallet id to search for</param>
+            <returns>wallet details</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.GetAllWallets(Shared.PaginationDefiners.PaginationParams)">
+            <summary>
+            Get all user wallets
+            </summary>
+            <returns>All user wallet details</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.GetAllUserWallets(Shared.PaginationDefiners.PaginationParams)">
+            <summary>
+            Gets wallet for a particular user
+            </summary>
+            <returns>User wallet details</returns>
+        </member>
+        <member name="M:Presentation.Controllers.WalletController.DeleteUserWalletAccount(System.String)">
+            <summary>
+            deletes wallet account
+            </summary>
+            <param name="walletId"></param>
+            <returns>a string response</returns>
+        </member>
+    </members>
+</doc>
