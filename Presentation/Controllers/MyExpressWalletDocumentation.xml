@@ -4,6 +4,13 @@
         <name>Presentation</name>
     </assembly>
     <members>
+        <member name="M:Presentation.Controllers.AuthenticationController.CreateAdminUser(Services.DTO_s.Request.UserCreationRequestDto)">
+            <summary>
+            Creates a user account and wallet
+            </summary>
+            <param name="userRequest">details to create user and user wallet account</param>
+            <returns></returns>
+        </member>
         <member name="M:Presentation.Controllers.AuthenticationController.CreateRegularUser(Services.DTO_s.Request.UserCreationRequestDto)">
             <summary>
             Creates a user account and wallet
@@ -18,7 +25,7 @@
             <param name="loginDetails">validation and authentication details needed</param>
             <returns>token and login response for user</returns>
         </member>
-        <member name="M:Presentation.Controllers.AuthenticationController.AddUserRoleByUserName(System.String,System.String)">
+        <member name="M:Presentation.Controllers.AuthenticationController.AddUserRoleByUserName(System.String,Common.Enums.UserRoles)">
             <summary>
             adds a user to a particular role
             </summary>
@@ -26,7 +33,7 @@
             <param name="role">role to assign user</param>
             <returns>success or failed message</returns>
         </member>
-        <member name="M:Presentation.Controllers.AuthenticationController.RemoveUserRoleByUserName(System.String,System.String)">
+        <member name="M:Presentation.Controllers.AuthenticationController.RemoveUserRoleByUserName(System.String,Common.Enums.UserRoles)">
             <summary>
             method to remove user from a role
             </summary>
