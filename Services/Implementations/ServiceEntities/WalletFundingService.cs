@@ -78,7 +78,7 @@ namespace Services.Implementations.ServiceEntities
                 _logger.LogInfo("returning authorization url to user for payment");
                 return StandardResponse<InitializeWalletFundingResponseDto>.Success("successful", initializeWalletFundingResponse);
             }
-            return StandardResponse<InitializeWalletFundingResponseDto>.Failed(initializeResponse.Message);
+            return StandardResponse<InitializeWalletFundingResponseDto>.Failed(initializeResponse.Message, initializeResponse.StatusCode);
         }        
 
         private async Task<StandardResponse<InitializeTransactionResponse>> InitializePaymentAsync(string email, int requestAmount)
@@ -117,7 +117,7 @@ namespace Services.Implementations.ServiceEntities
                     var innerException = new Exception($"HTTP request failed with status code {statusCode}: {reasonPhrase}");
 
                     _logger.LogError($"failed to initialize payment to paystack. Throwing exception: {innerException}");
-                    return StandardResponse<InitializeTransactionResponse>.Failed("service not available at the moment. Try again later.");
+                    return StandardResponse<InitializeTransactionResponse>.Failed("service not available at the moment. Try again later.", 500);
                 }
             }
         }     

@@ -42,7 +42,7 @@ namespace Services.Implementations.ServiceCommon
             {
                 Subject = new ClaimsIdentity(claim),
                 Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = cred
+                SigningCredentials = cred,
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

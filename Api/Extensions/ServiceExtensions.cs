@@ -2,14 +2,12 @@
 using Application.UnitOfWork.Implementations;
 using Application.UnitOfWork.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using Services.Helpers.MailService;
 using Services.Helpers.MailServices;
 using Services.Implementations.ServiceCommon;
 using Services.Interfaces.IServiceCommon;
 using Services.LoggerService.Implementation;
 using Services.LoggerService.Interface;
-using System.Reflection;
 
 namespace Api.Extensions
 {

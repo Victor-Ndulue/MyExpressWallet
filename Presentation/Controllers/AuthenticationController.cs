@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Common.Enums;
+using Microsoft.AspNetCore.Mvc;
 using Services.DTO_s.Request;
 using Services.Interfaces.IServiceCommon;
 using Services.Interfaces.IServiceEntities;
@@ -14,13 +15,18 @@ namespace Presentation.Controllers
             _services = services.AuthenticationServices;
         }
 
-        //[HttpPost]
-        //[Route("create-user/admin")]
-        //public async Task<IActionResult> CreateAdminUser(UserCreationRequestDto userRequest)
-        //{
-        //    var response = await _services.CreateAdminUser(userRequest);
-        //    return Ok(response);
-        //}
+        /// <summary>
+        /// Creates a user account and wallet
+        /// </summary>
+        /// <param name="userRequest">details to create user and user wallet account</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("create-user/admin")]
+        public async Task<IActionResult> CreateAdminUser(UserCreationRequestDto userRequest)
+        {
+            var response = await _services.CreateAdminUser(userRequest);
+            return Ok(response);
+        }
 
         /// <summary>
         /// Creates a user account and wallet
@@ -55,7 +61,7 @@ namespace Presentation.Controllers
         /// <returns>success or failed message</returns>
         [HttpPost]
         [Route("add-user-roles/username")]
-        public async Task<IActionResult> AddUserRoleByUserName([FromForm]string userName, string role)
+        public async Task<IActionResult> AddUserRoleByUserName(string userName, UserRoles role)
         {
             var response = await _services.AddUserToRoleByUserName(userName, role);
             return Ok(response);
@@ -69,7 +75,7 @@ namespace Presentation.Controllers
         /// <returns>success or failure msg</returns>
         [HttpPost]
         [Route("remove-user-roles")]
-        public async Task<IActionResult> RemoveUserRoleByUserName([FromForm]string userName, string role)
+        public async Task<IActionResult> RemoveUserRoleByUserName(string userName, UserRoles role)
         {
             var response = await _services.RemoveUserRole(userName, role);
             return Ok(response);

@@ -1,4 +1,5 @@
-﻿using Domain.Entites;
+﻿using Common.Enums;
+using Domain.Entites;
 using Microsoft.AspNetCore.Identity;
 using Services.DTO_s.Request;
 using Services.DTO_s.Response;
@@ -11,7 +12,7 @@ namespace Services.Interfaces.IServiceEntities
         Task<StandardResponse<UserLoginResponse>> CreateAdminUser(UserCreationRequestDto userRequest);
         Task<StandardResponse<RegularUserCreationResponse>> CreateRegularUser(UserCreationRequestDto userCreationRequest);
         Task<StandardResponse<UserLoginResponse>> UserLogin(UserLoginRequestDto login);
-        Task<StandardResponse<string>> AddUserToRoleByUserName(string userName, string role);
-        Task<StandardResponse<string>> RemoveUserRole(string userName, string role);
+        Task<StandardResponse<string>> AddUserToRoleByUserName(string userName, UserRoles roles);
+        Task<StandardResponse<string>> RemoveUserRole(string userName, UserRoles roles);
     }
 }

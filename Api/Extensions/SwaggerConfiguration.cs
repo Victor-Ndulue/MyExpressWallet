@@ -33,6 +33,13 @@ namespace Api.Extensions
             };
 
             options.AddSecurityRequirement(securityRequirement);
+
+            string path = @"C:\Users\victor.ndulue\OneDrive - Africa Prudential\source\repos\MyExpressWallet\Presentation\Controllers";
+            var xmlFile = "MyExpressWalletDocumentation.xml";
+            var xmlPath = Path.Combine(path, xmlFile);
+            var documentationPath = Path.GetFullPath(xmlPath);
+
+            options.IncludeXmlComments(documentationPath);
         }
     }
 }

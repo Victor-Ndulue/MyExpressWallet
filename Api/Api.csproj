@@ -4,9 +4,10 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GenerateDocumentationFile>TrueTrue</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\victor.ndulue\OneDrive - Africa Prudential\source\repos\MyExpressWallet\Presentation\Controllers\MyExpressWalletDocumentation.xml</DocumentationFile>
 	  <NoWarn>$(NoWarn);1591</NoWarn>
-	  <DocumentationFile>C:\Users\victor.ndulue\OneDrive - Africa Prudential\source\repos\MyExpressWallet\Presentation\Controllers\MyExpressWalletDocumentation.xml</DocumentationFile>
+
   </PropertyGroup>
 
   <ItemGroup>

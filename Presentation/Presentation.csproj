@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\victor.ndulue\OneDrive - Africa Prudential\source\repos\MyExpressWallet\Presentation\Controllers\MyExpressWalletDocumentation.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\victor.ndulue\OneDrive - Africa Prudential\source\repos\MyExpressWallet\Presentation\Controllers\MyExpressWalletDocumentation.xml</DocumentationFile>    
   </PropertyGroup>
 
   <ItemGroup>
